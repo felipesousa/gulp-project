@@ -1,0 +1,10 @@
+{
+  "name": "gulp-project",
+  "private": "true",
+  "dependencies": {
+    "slick-carousel": "^1.5.9",
+    "jquery": "^2.2.1",
+    "bootstrap": "^3.3.6",
+    "nouislider": "^8.3.0"
+  }
+}

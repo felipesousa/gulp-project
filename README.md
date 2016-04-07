@@ -1,4 +1,4 @@
-# Gulp Project Base
+# Gulp Project
 
 ## Installation 
 - Open terminal
