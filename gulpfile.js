@@ -1,19 +1,21 @@
-var gulp = require('gulp'),
-    plumber = require('gulp-plumber'),
-    rename = require('gulp-rename'),
-    autoprefixer = require('gulp-autoprefixer'),
-    minifyCss = require('gulp-minify-css'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
-    imagemin = require('gulp-imagemin'),
-    cache = require('gulp-cache'),
-    sass = require('gulp-sass'),
-    browserSync = require('browser-sync'),
-    flatten = require('gulp-flatten'),
-    gulpFilter = require('gulp-filter'),
-    jade = require('gulp-jade-php'),
-    connect = require('gulp-connect-php'),
-    mainBowerFiles = require('gulp-main-bower-files');
+var gulp            = require('gulp'),
+    plumber         = require('gulp-plumber'),
+    rename          = require('gulp-rename'),
+    autoprefixer    = require('gulp-autoprefixer'),
+    minifyCss       = require('gulp-minify-css'),
+    concat          = require('gulp-concat'),
+    uglify          = require('gulp-uglify'),
+    imagemin        = require('gulp-imagemin'),
+    cache           = require('gulp-cache'),
+    sass            = require('gulp-sass'),
+    browserSync     = require('browser-sync'),
+    flatten         = require('gulp-flatten'),
+    gulpFilter      = require('gulp-filter'),
+    jade            = require('gulp-jade-php'),
+    connect         = require('gulp-connect-php'),
+    gulpsync        = require('gulp-sync')(gulp),
+    del             = require('del'),
+    mainBowerFiles  = require('gulp-main-bower-files');
 
 
 var paths = {
@@ -34,6 +36,12 @@ gulp.task('browser-sync', function() {
        baseDir: "./www"
     }
   });
+});
+
+gulp.task('clean', function() {
+  return del([
+    'www/'
+  ]);
 });
 
 gulp.task('connect-sync', function() {
@@ -158,6 +166,23 @@ gulp.task('watch',function(){
   gulp.watch(paths.images, ['images', 'bs-reload']);
 });
 
-gulp.task('default', ['styles','scripts','pages','images', 'watch' ,'connect-sync']);
+gulp.task('default', gulpsync.sync([
+  'clean', 
+  'styles',
+  'scripts',
+  'pages',
+  'images', 
+  'watch',
+  'connect-sync'
+  ])
+);
 
-gulp.task('build', ['styles', 'scripts', 'pages', 'images', 'libs']);
+gulp.task('build', gulpsync.sync([
+  'clean', 
+  'styles', 
+  'scripts', 
+  'pages', 
+  'images', 
+  'libs'
+  ])
+);
