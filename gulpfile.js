@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     flatten = require('gulp-flatten'),
     gulpFilter = require('gulp-filter'),
+    connect = require('gulp-connect-php'),
     mainBowerFiles = require('gulp-main-bower-files');
 
 
@@ -21,7 +22,7 @@ var paths = {
     stylesDest: 'www/assets/styles',
     images: 'src/images/**/*.*',
     imagesDest: 'www/assets/images',
-    pages: 'src/*.html',
+    pages: 'src/*.php',
     pagesDest: 'www/',
     fontsDest: 'www/assets/fonts'
 };
@@ -31,6 +32,18 @@ gulp.task('browser-sync', function() {
     server: {
        baseDir: "./www"
     }
+  });
+});
+
+gulp.task('connect-sync', function() {
+  connect.server({
+    port: 8000,
+    base: 'www',
+    livereload: true
+    }, function (){
+    browserSync({
+      proxy: '127.0.0.1:8000'
+    });
   });
 });
 
@@ -136,6 +149,6 @@ gulp.task('watch',function(){
   gulp.watch(paths.images, ['images', 'bs-reload']);
 });
 
-gulp.task('default', ['styles','scripts','pages','images', 'watch' ,'browser-sync']);
+gulp.task('default', ['styles','scripts','pages','images', 'watch' ,'connect-sync']);
 
 gulp.task('build', ['styles', 'scripts', 'pages', 'images', 'libs']);

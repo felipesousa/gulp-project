@@ -12,7 +12,9 @@
     <![endif]-->
   </head>
   <body id="body" class="body">
-    <header></header>
+    <header>
+      <h1><?php echo "Hello world!"; ?></h1>
+    </header>
     <footer></footer>
   </body>
 </html>
