@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     flatten = require('gulp-flatten'),
     gulpFilter = require('gulp-filter'),
+    jade = require('gulp-jade-php'),
     mainBowerFiles = require('gulp-main-bower-files');
 
 
@@ -21,7 +22,7 @@ var paths = {
     stylesDest: 'www/assets/styles',
     images: 'src/images/**/*.*',
     imagesDest: 'www/assets/images',
-    pages: 'src/*.html',
+    pages: 'src/**/*.jade',
     pagesDest: 'www/',
     fontsDest: 'www/assets/fonts'
 };
@@ -73,6 +74,9 @@ gulp.task('pages', function(){
         console.log(error.message);
         this.emit('end');
     }}))
+    .pipe(jade({
+        pretty: '\t'
+    }))
     .pipe(gulp.dest(paths.pagesDest))
     .pipe(browserSync.reload({stream:true}))
 });
