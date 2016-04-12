@@ -88,7 +88,12 @@ gulp.task('pages', function(){
         this.emit('end');
     }}))
     .pipe(jade({
-        pretty: '\t'
+        pretty: '\t',
+        locals:{
+          echo:function(str){
+              return "<?php echo $"+str+"; ?>"
+          }
+        }
     }))
     .pipe(gulp.dest(paths.pagesDest))
     .pipe(browserSync.reload({stream:true}))
