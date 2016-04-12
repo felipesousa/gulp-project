@@ -22,7 +22,11 @@
     "preinstall": "npm install -g bower",
     "postinstall": "bower install",
     "start": "gulp",
-    "stop": "rm -rf node_modules"
+    "stop": "rm -rf node_modules",
+    "lint": "./node_modules/.bin/jscs src && ./node_modules/.bin/jshint src",
+    "fix": "./node_modules/.bin/jscs src --fix",
+    "precommit": "npm run lint",
+    "prepush": "npm run lint"
   },
   "engines": {
     "node": "^4.2.2",
